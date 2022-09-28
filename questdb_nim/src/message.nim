@@ -52,8 +52,8 @@ proc fromString(s: string): IlpMessage =
 when isMainModule:
   let msg1 = IlpMessage(
     tableName: "hi",
-    tagset: {"mytag-1":"mytagvalue-1", "mytag-2":"mytagvalue-2"}.toTable(),
-    valueset: {"myvalue-1": 3.14159265358979323846264338327950, "myvalue-2": 2.0}.toTable(),
+    tagset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toTable(),
+    valueset: {"myvalue_1": 3.14159265358979323846264338327950, "myvalue_2": 2.0}.toTable(),
   )
   echo $msg1
   doAssert msg1.isValid()

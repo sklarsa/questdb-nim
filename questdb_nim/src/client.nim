@@ -1,5 +1,6 @@
 import message
 import std/net
+import std/os
 import std/tables
 
 type
@@ -23,9 +24,10 @@ when isMainModule:
     let c = newIlpClient("localhost", Port(9009))
     let msg1 = IlpMessage(
         tableName: "hi",
-        tagset: {"mytag-1":"mytagvalue-1", "mytag-2":"mytagvalue-2"}.toTable(),
-        valueset: {"myvalue-1": 3.14159265358979323846264338327950, "myvalue-2": 2.0}.toTable(),
+        tagset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toTable(),
+        valueset: {"myvalue_1": 3.14159265358979323846264338327950, "myvalue_2": 2.0}.toTable(),
     )
     echo $msg1
     c.send(msg1)
+    sleep(1000)
     c.socket.close()
