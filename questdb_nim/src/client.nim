@@ -1,6 +1,5 @@
 import message
 import std/net
-import std/os
 import std/tables
 
 type
@@ -29,5 +28,4 @@ when isMainModule:
     )
     echo $msg1
     c.send(msg1)
-    sleep(1000)
     c.socket.close()
