@@ -1,2 +1,2 @@
 test:
-	nim c -r questdb_nim/src/message.nim
+	nim c -r questdb_nim/tests/protocol.nim

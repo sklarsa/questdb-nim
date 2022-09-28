@@ -3,8 +3,8 @@ import std/tables
 import std/times
 
 type
-  IlpTimestamp = ref object
-    timestamp: Time
+  IlpTimestamp* = ref object
+    timestamp*: Time
 
 
 type
@@ -25,9 +25,9 @@ proc `$`*(m: IlpMessage): string =
   for k,v in m.valueset.pairs:
     s.add ($k & "=" & $v & ",")
   s.removeSuffix(",")
-  s.add " "
-  if not m.timestamp.isNil():
 
+  if not m.timestamp.isNil():
+    s.add " "
     let unix = m.timestamp.timestamp.toUnixFloat()
     s.add $unix
   s
