@@ -48,7 +48,7 @@ when isMainModule:
   let msg1 = IlpMessage(
     tableName: "hi",
     tagset: {"mytag-1":"mytagvalue-1", "mytag-2":"mytagvalue-2"}.toTable(),
-    valueset: {"myvalue-1": 1.0, "myvalue-2": 2.0}.toTable(),
+    valueset: {"myvalue-1": 3.1415926535, "myvalue-2": 2.0}.toTable(),
   )
   echo $msg1
   doAssert msg1.isValid()
