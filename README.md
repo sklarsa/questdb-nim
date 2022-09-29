@@ -6,3 +6,4 @@
 
 ### todo:
 1. Pipeline to autogenerate docs
+2. Add a questdb instance to Makefile for testing (Docker?)
