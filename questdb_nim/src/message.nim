@@ -20,6 +20,8 @@ type
 
 
 proc `$`*(m: IlpMessage): string =
+  # todo: handle escaping
+
   var s = m.tableName
   s.add ","
   for k,v  in m.symbolset.pairs:
