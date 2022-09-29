@@ -1,7 +1,15 @@
+import std/math
 import std/strformat
 import std/strutils
 import std/tables
 import std/times
+
+
+proc toMicroseconds*(t: Time): int =
+  int(round(t.toUnixFloat() * 1_000_000))
+
+proc toNanoseconds*(t: Time): int =
+  int(round(t.toUnixFloat() * 1_000_000_000))
 
 # https://internet-of-tomohiro.netlify.app/nim/faq.en.html#coding-how-to-store-different-types-in-seqqmark
 # https://nim-lang.org/docs/manual.html#types-object-variants
@@ -27,7 +35,7 @@ proc `$`*(v: IlpValue): string =
   of ilpInt: $v.intVal & 'i'
   of ilpFloat: $v.floatVal
   of ilpString: '"' & $v.stringVal & '"'
-  of ilpTime: $v.timeVal.toUnixFloat() & 't'
+  of ilpTime: $v.timeVal.toMicroseconds() & 't'
 
 # todo: implement long256 -- https://questdb.io/docs/reference/api/ilp/columnset-types#long256
 
@@ -54,7 +62,7 @@ proc `$`*(m: IlpMessage): string =
   # todo: I guess this doesn't support unix epoch right now...
   if (m.timestamp != Time()):
     s.add " "
-    let unix = m.timestamp.toUnixFloat()
+    let unix = $m.timestamp.toNanoseconds()
     s.add $unix
   s
 
@@ -91,29 +99,3 @@ proc validate*(m: IlpMessage) =
     for c in s:
       if forbiddenColumnChars.contains(c):
         raise newException(ValueError, fmt"invalid columnset key: '{c}")
-
-
-proc fromString(s: string): IlpMessage =
-  raise newException(Exception, "Not implemented")
-
-when isMainModule:
-  let msg1 = IlpMessage(
-    tableName: "hi",
-    symbolset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toOrderedTable(),
-    columnset: {
-      "myvalue_1": IlpValue(kind: ilpFloat, floatVal: 3.14159265358979323846264338327950),
-      "myvalue_2": IlpValue(kind: ilpString, stringVal: "2.0"),
-    }.toOrderedTable(),
-  )
-
-  echo $msg1
-  msg1.validate()
-
-  let msg2 = IlpMessage(
-    tableName: msg1.tableName,
-    symbolset: msg1.symbolset,
-    columnset: msg1.columnset,
-    timestamp: now().toTime()
-  )
-  echo $msg2
-  msg2.validate()
