@@ -13,27 +13,28 @@ import message
 
 test "protocol":
 
-  let tags = {"t1":"tv1", "t2":"tv2"}.toTable()
+  let symbols = {"t1":"tv1", "t2":"tv2"}.toTable()
   let vals = {"v1": 1.0, "v2": 2.0}.toTable()
   let time = now().toTime()
 
   # Message with no timestamp
   let m1 = IlpMessage(
       tableName: "hi",
-      tagset: tags,
-      valueset: vals,
+      symbolset: symbols,
+      columnset: vals,
   )
   check $m1 == "hi,t1=tv1,t2=tv2 v1=1.0,v2=2.0"
-  check m1.isValid()
+  m1.validate()
 
   # Message with a timestamp
   let m2 = IlpMessage(
     tableName: "hi",
-    tagset: tags,
-    valueset: vals,
+    symbolset: symbols,
+    columnset: vals,
     timestamp: IlpTimestamp(timestamp: time),
   )
   check $m2 == "hi,t1=tv1,t2=tv2 v1=1.0,v2=2.0 " & $(m2.timestamp.timestamp.toUnixFloat())
-  check m2.isValid()
+  m2.validate()
 
-  #Me
+  # Edge case
+  ## for future reference... doAssertRaises(ValueError): ...
