@@ -24,7 +24,7 @@ proc `$`*(v: IlpValue): string =
   of ilpInt: $v.intVal
   of ilpFloat: $v.floatVal
   of ilpString: $v.stringVal
-  of ilpTime: $v.timeVal
+  of ilpTime: $v.timeVal.toUnixFloat()
 
 # todo: implement long256 -- https://questdb.io/docs/reference/api/ilp/columnset-types#long256
 
@@ -32,8 +32,8 @@ proc `$`*(v: IlpValue): string =
 type
   IlpMessage* = object
     tableName*: string
-    symbolset*: Table[string, string]
-    columnset*: Table[string, IlpValue]
+    symbolset*: OrderedTable[string, string]
+    columnset*: OrderedTable[string, IlpValue]
     timestamp*: Time
 
 proc `$`*(m: IlpMessage): string =
@@ -97,11 +97,11 @@ proc fromString(s: string): IlpMessage =
 when isMainModule:
   let msg1 = IlpMessage(
     tableName: "hi",
-    symbolset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toTable(),
+    symbolset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toOrderedTable(),
     columnset: {
       "myvalue_1": IlpValue(kind: ilpFloat, floatVal: 3.14159265358979323846264338327950),
       "myvalue_2": IlpValue(kind: ilpString, stringVal: "2.0"),
-    }.toTable(),
+    }.toOrderedTable(),
   )
 
   echo $msg1

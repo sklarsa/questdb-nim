@@ -13,11 +13,16 @@ import message
 
 test "protocol":
 
-  let symbols = {"t1":"tv1", "t2":"tv2"}.toTable()
+  let symbols = {"t1":"tv1", "t2":"tv2"}.toOrderedTable()
+  let timestamp = now().toTime()
 
   let vals = {
     "v1": IlpValue(kind: ilpFloat, floatVal: 1.0),
-    "v2": IlpValue(kind: ilpString, stringVal: "2.0")}.toTable()
+    "v2": IlpValue(kind: ilpString, stringVal: "2.0"),
+    "v3": IlpValue(kind: ilpInt, intVal: 3),
+    "v4": IlpValue(kind: ilpTime, timeVal: timestamp)
+  }.toOrderedTable()
+
   let time = now().toTime()
 
   # Message with no timestamp
@@ -26,17 +31,17 @@ test "protocol":
       symbolset: symbols,
       columnset: vals,
   )
-  check $m1 == "hi,t1=tv1,t2=tv2 v1=1.0,v2=2.0"
+  check $m1 == "hi,t1=tv1,t2=tv2 v1=1.0,v2=2.0,v3=3,v4=" & $(vals["v4"].timeVal.toUnixFloat())
   m1.validate()
 
   # Message with a timestamp
   let m2 = IlpMessage(
     tableName: "hi",
     symbolset: symbols,
-    columnset: vals,
+    columnset: {"v1": IlpValue(kind: ilpString, stringVal: "test")}.toOrderedTable(),
     timestamp: time,
   )
-  check $m2 == "hi,t1=tv1,t2=tv2 v1=1.0,v2=2.0 " & $(m2.timestamp.toUnixFloat())
+  check $m2 == "hi,t1=tv1,t2=tv2 v1=test " & $(m2.timestamp.toUnixFloat())
   m2.validate()
 
   # Edge case

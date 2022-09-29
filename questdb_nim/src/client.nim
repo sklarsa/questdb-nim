@@ -36,11 +36,11 @@ when isMainModule:
     let c = newIlpClient("localhost", Port(9009))
     let msg1 = IlpMessage(
         tableName: "hi",
-        symbolset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toTable(),
+        symbolset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toOrderedTable(),
         columnset: {
             "myvalue_1": IlpValue(kind: ilpFloat, floatVal: 3.14159265358979323846264338327950),
             "myvalue_2": IlpValue(kind: ilpString, stringVal: "2.0"),
-        }.toTable()
+        }.toOrderedTable()
     )
     echo $msg1
     c.send(msg1)
