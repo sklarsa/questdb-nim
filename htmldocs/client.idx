@@ -1,0 +1,2 @@
+send	client.html#send,IlpClient,IlpMessage	client: send(c: IlpClient; m: IlpMessage)	
+send	client.html#send,IlpClient,openArray[IlpMessage]	client: send(c: IlpClient; m: openArray[IlpMessage])	

@@ -1,0 +1,4 @@
+IlpTimestamp	message.html#IlpTimestamp	message: IlpTimestamp	
+IlpMessage	message.html#IlpMessage	message: IlpMessage	
+`$`	message.html#$,IlpMessage	message: `$`(m: IlpMessage): string	
+isValid	message.html#isValid,IlpMessage	message: isValid(m: IlpMessage): bool	
