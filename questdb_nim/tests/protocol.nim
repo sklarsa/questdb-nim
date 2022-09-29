@@ -6,6 +6,7 @@
 # To run these tests, simply execute `nimble test`.
 
 import unittest
+import std/strformat
 import std/tables
 import std/times
 
@@ -20,7 +21,8 @@ test "protocol":
     "v1": IlpValue(kind: ilpFloat, floatVal: 1.0),
     "v2": IlpValue(kind: ilpString, stringVal: "2.0"),
     "v3": IlpValue(kind: ilpInt, intVal: 3),
-    "v4": IlpValue(kind: ilpTime, timeVal: timestamp)
+    "v4": IlpValue(kind: ilpTime, timeVal: timestamp),
+    "v5": IlpValue(kind: ilpBool, boolVal: false),
   }.toOrderedTable()
 
   let time = now().toTime()
@@ -31,7 +33,8 @@ test "protocol":
       symbolset: symbols,
       columnset: vals,
   )
-  check $m1 == "hi,t1=tv1,t2=tv2 v1=1.0,v2=2.0,v3=3,v4=" & $(vals["v4"].timeVal.toUnixFloat())
+  let t1 = $(vals["v4"].timeVal.toUnixFloat()) & 't'
+  check $m1 == &"hi,t1=tv1,t2=tv2 v1=1.0,v2=\"2.0\",v3=3i,v4={t1},v5=false"
   m1.validate()
 
   # Message with a timestamp
@@ -41,7 +44,7 @@ test "protocol":
     columnset: {"v1": IlpValue(kind: ilpString, stringVal: "test")}.toOrderedTable(),
     timestamp: time,
   )
-  check $m2 == "hi,t1=tv1,t2=tv2 v1=test " & $(m2.timestamp.toUnixFloat())
+  check $m2 == "hi,t1=tv1,t2=tv2 v1=\"test\" " & $(m2.timestamp.toUnixFloat())
   m2.validate()
 
   # Edge case

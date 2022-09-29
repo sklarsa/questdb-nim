@@ -7,6 +7,7 @@ import std/times
 # https://nim-lang.org/docs/manual.html#types-object-variants
 type
   IlpValueKind* = enum
+    ilpBool,
     ilpInt,
     ilpFloat,
     ilpString,
@@ -14,6 +15,7 @@ type
   IlpValue* = ref IlpValueObj
   IlpValueObj = object
     case kind*: IlpValueKind
+    of ilpBool: boolVal*: bool
     of ilpInt: intVal*: int
     of ilpFloat: floatVal*: float
     of ilpString: stringVal*: string
@@ -21,13 +23,13 @@ type
 
 proc `$`*(v: IlpValue): string =
   case v.kind
-  of ilpInt: $v.intVal
+  of ilpBool: $v.boolVal
+  of ilpInt: $v.intVal & 'i'
   of ilpFloat: $v.floatVal
-  of ilpString: $v.stringVal
-  of ilpTime: $v.timeVal.toUnixFloat()
+  of ilpString: '"' & $v.stringVal & '"'
+  of ilpTime: $v.timeVal.toUnixFloat() & 't'
 
 # todo: implement long256 -- https://questdb.io/docs/reference/api/ilp/columnset-types#long256
-
 
 type
   IlpMessage* = object

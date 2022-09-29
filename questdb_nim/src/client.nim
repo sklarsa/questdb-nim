@@ -12,6 +12,8 @@ proc newIlpClient(address: string, port: Port): IlpClient =
     let sock = newSocket()
     sock.connect(address, port)
 
+    # todo: handle authentication here
+
     IlpClient(address: address, port: port, socket: sock)
 
 
