@@ -3,12 +3,31 @@ import std/strutils
 import std/tables
 import std/times
 
+# https://internet-of-tomohiro.netlify.app/nim/faq.en.html#coding-how-to-store-different-types-in-seqqmark
+# https://nim-lang.org/docs/manual.html#types-object-variants
 type
-  IlpValue* {.union.} = object
-    i*: int64
-    f*: float64
-    s*: string
-    t*: Time
+  IlpValueKind* = enum
+    ilpInt,
+    ilpFloat,
+    ilpString,
+    ilpTime
+  IlpValue* = ref IlpValueObj
+  IlpValueObj = object
+    case kind*: IlpValueKind
+    of ilpInt: intVal*: int
+    of ilpFloat: floatVal*: float
+    of ilpString: stringVal*: string
+    of ilpTime: timeVal*: Time
+
+proc `$`*(v: IlpValue): string =
+  case v.kind
+  of ilpInt: $v.intVal
+  of ilpFloat: $v.floatVal
+  of ilpString: $v.stringVal
+  of ilpTime: $v.timeVal
+
+# todo: implement long256 -- https://questdb.io/docs/reference/api/ilp/columnset-types#long256
+
 
 type
   IlpMessage* = object
@@ -16,8 +35,6 @@ type
     symbolset*: Table[string, string]
     columnset*: Table[string, IlpValue]
     timestamp*: Time
-    # todo: implement long256 -- https://questdb.io/docs/reference/api/ilp/columnset-types#long256
-
 
 proc `$`*(m: IlpMessage): string =
   # todo: handle escaping
@@ -78,15 +95,15 @@ proc fromString(s: string): IlpMessage =
   raise newException(Exception, "Not implemented")
 
 when isMainModule:
-  let t = IlpValue(f: 1.0)
-
-
-
   let msg1 = IlpMessage(
     tableName: "hi",
     symbolset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toTable(),
-    columnset: {"myvalue_1": IlpValue(f: 3.14159265358979323846264338327950), "myvalue_2": IlpValue(s: "2.0")}.toTable(),
+    columnset: {
+      "myvalue_1": IlpValue(kind: ilpFloat, floatVal: 3.14159265358979323846264338327950),
+      "myvalue_2": IlpValue(kind: ilpString, stringVal: "2.0"),
+    }.toTable(),
   )
+
   echo $msg1
   msg1.validate()
 

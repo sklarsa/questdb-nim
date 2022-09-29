@@ -14,11 +14,10 @@ import message
 test "protocol":
 
   let symbols = {"t1":"tv1", "t2":"tv2"}.toTable()
-  let t = IlpValue(f: 1.0)
-  echo t
 
-
-  let vals = {"v1": IlpValue(f: 1.0), "v2": IlpValue(s: "2.0")}.toTable()
+  let vals = {
+    "v1": IlpValue(kind: ilpFloat, floatVal: 1.0),
+    "v2": IlpValue(kind: ilpString, stringVal: "2.0")}.toTable()
   let time = now().toTime()
 
   # Message with no timestamp
