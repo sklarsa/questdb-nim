@@ -112,6 +112,8 @@ window.addEventListener('DOMContentLoaded', main);
     title="send(c: IlpClient; m: IlpMessage)">send(c: IlpClient; m: IlpMessage)</a></li>
   <li><a class="reference" href="#send%2CIlpClient%2CopenArray%5BIlpMessage%5D"
     title="send(c: IlpClient; m: openArray[IlpMessage])">send(c: IlpClient; m: openArray[IlpMessage])</a></li>
+  <li><a class="reference" href="#send%2CIlpClient%2Cstring"
+    title="send(c: IlpClient; m: string)">send(c: IlpClient; m: string)</a></li>
 
   </ul>
 
@@ -152,6 +154,15 @@ Sends a list of messages to the server
 
 </dd>
 </div>
+<div id="send,IlpClient,string">
+<dt><pre><span class="Keyword">proc</span> <a href="#send%2CIlpClient%2Cstring"><span class="Identifier">send</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">IlpClient</span><span class="Other">;</span> <span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">SslError</span><span class="Other">,</span> <span class="Identifier">OSError</span><span class="Other">]</span><span class="Other">,</span>
+                                     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span></span>.}</pre></dt>
+<dd>
+
+Sends a raw string message to the server. WARNING: No validation is performed in this message.  The caller is responsible for ensuring that the message is formatted correctly
+
+</dd>
+</div>
 
 </dl></div>
 
@@ -162,7 +173,7 @@ Sends a list of messages to the server
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2022-09-29 14:32:11 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2022-09-29 15:53:42 UTC</small>
       </div>
     </div>
   </div>

@@ -1,3 +1,5 @@
+toMicroseconds	message.html#toMicroseconds,Time	message: toMicroseconds(t: Time): int	
+toNanoseconds	message.html#toNanoseconds,Time	message: toNanoseconds(t: Time): int	
 ilpBool	message.html#ilpBool	IlpValueKind.ilpBool	
 ilpInt	message.html#ilpInt	IlpValueKind.ilpInt	
 ilpFloat	message.html#ilpFloat	IlpValueKind.ilpFloat	

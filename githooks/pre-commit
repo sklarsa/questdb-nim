@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Autogenerate docs before a commit
+echo "Autogenerating docs..."
+make docs
+git add ./htmldocs
