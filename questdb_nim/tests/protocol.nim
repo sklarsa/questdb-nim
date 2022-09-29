@@ -17,13 +17,16 @@ test "protocol":
   let vals = {"v1": 1.0, "v2": 2.0}.toTable()
   let time = now().toTime()
 
+  # Message with no timestamp
   let m1 = IlpMessage(
       tableName: "hi",
       tagset: tags,
       valueset: vals,
   )
   check $m1 == "hi,t1=tv1,t2=tv2 v1=1.0,v2=2.0"
+  check m1.isValid()
 
+  # Message with a timestamp
   let m2 = IlpMessage(
     tableName: "hi",
     tagset: tags,
@@ -31,3 +34,6 @@ test "protocol":
     timestamp: IlpTimestamp(timestamp: time),
   )
   check $m2 == "hi,t1=tv1,t2=tv2 v1=1.0,v2=2.0 " & $(m2.timestamp.timestamp.toUnixFloat())
+  check m2.isValid()
+
+  #Me

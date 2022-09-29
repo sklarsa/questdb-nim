@@ -1,5 +1,6 @@
 import message
 import std/net
+import std/strutils
 import std/tables
 
 type
@@ -16,8 +17,23 @@ proc newIlpClient(address: string, port: Port): IlpClient =
 
 
 proc send*(c: IlpClient, m: IlpMessage) =
-    let msg = $m & '\n'
-    c.socket.send(msg)
+    ## Sends a single message to the server
+    let payload = $m & '\n'
+    if not m.isValid():
+        raise newException(ValueError, "Invalid message: " & $m)
+
+    c.socket.send(payload)
+
+proc send*(c: IlpClient, m: openArray[IlpMessage]) =
+    ## Sends a list of messages to the server
+    var payload = ""
+    for msg in m:
+        if not msg.isValid():
+            raise newException(ValueError, "Invalid message: " & $m)
+        payload.add($msg & '\n')
+
+    c.socket.send(payload)
+
 
 when isMainModule:
     let c = newIlpClient("localhost", Port(9009))
