@@ -37,7 +37,7 @@ when isMainModule:
     let msg1 = IlpMessage(
         tableName: "hi",
         symbolset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toTable(),
-        columnset: {"myvalue_1": 3.14159265358979323846264338327950, "myvalue_2": 2.0}.toTable(),
+        columnset: {"myvalue_1": IlpValue(f: 3.14159265358979323846264338327950), "myvalue_2": IlpValue(s: "2.0")}.toTable(),
     )
     echo $msg1
     c.send(msg1)

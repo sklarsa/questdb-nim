@@ -4,16 +4,19 @@ import std/tables
 import std/times
 
 type
-  IlpTimestamp* = ref object
-    timestamp*: Time
-
+  IlpValue* {.union.} = object
+    i*: int64
+    f*: float64
+    s*: string
+    t*: Time
 
 type
   IlpMessage* = object
     tableName*: string
     symbolset*: Table[string, string]
-    columnset*: Table[string, float64]
-    timestamp*: IlpTimestamp
+    columnset*: Table[string, IlpValue]
+    timestamp*: Time
+    # todo: implement long256 -- https://questdb.io/docs/reference/api/ilp/columnset-types#long256
 
 
 proc `$`*(m: IlpMessage): string =
@@ -27,9 +30,10 @@ proc `$`*(m: IlpMessage): string =
     s.add ($k & "=" & $v & ",")
   s.removeSuffix(",")
 
-  if not m.timestamp.isNil():
+  # todo: I guess this doesn't support unix epoch right now...
+  if (m.timestamp != Time()):
     s.add " "
-    let unix = m.timestamp.timestamp.toUnixFloat()
+    let unix = m.timestamp.toUnixFloat()
     s.add $unix
   s
 
@@ -37,7 +41,7 @@ const forbiddenTableChars = ['\n','\r','?',',',':','"','\'','\\','/','\0',')','(
 const forbiddenColumnChars = ['\n','\r','?',',',':','"','\'','\\','/','\0',')','(','+','*','~','%','.','-']
 
 proc validate*(m: IlpMessage) =
-  # todo: check escaped spaces
+  # todo: check escaped chars
 
   # Check table
   if m.tableName == "":
@@ -68,16 +72,18 @@ proc validate*(m: IlpMessage) =
         raise newException(ValueError, fmt"invalid columnset key: '{c}")
 
 
-
-
 proc fromString(s: string): IlpMessage =
   raise newException(Exception, "Not implemented")
 
 when isMainModule:
+  let t = IlpValue(f: 1.0)
+
+
+
   let msg1 = IlpMessage(
     tableName: "hi",
     symbolset: {"mytag_1":"mytagvalue_1", "mytag_2":"mytagvalue_2"}.toTable(),
-    columnset: {"myvalue_1": 3.14159265358979323846264338327950, "myvalue_2": 2.0}.toTable(),
+    columnset: {"myvalue_1": IlpValue(f: 3.14159265358979323846264338327950), "myvalue_2": IlpValue(s: "2.0")}.toTable(),
   )
   echo $msg1
   msg1.validate()
@@ -86,7 +92,7 @@ when isMainModule:
     tableName: msg1.tableName,
     symbolset: msg1.symbolset,
     columnset: msg1.columnset,
-    timestamp: IlpTimestamp(timestamp: now().toTime())
+    timestamp: now().toTime()
   )
   echo $msg2
   msg2.validate()
