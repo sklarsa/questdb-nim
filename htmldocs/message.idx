@@ -1,4 +1,11 @@
-IlpTimestamp	message.html#IlpTimestamp	message: IlpTimestamp	
+ilpBool	message.html#ilpBool	IlpValueKind.ilpBool	
+ilpInt	message.html#ilpInt	IlpValueKind.ilpInt	
+ilpFloat	message.html#ilpFloat	IlpValueKind.ilpFloat	
+ilpString	message.html#ilpString	IlpValueKind.ilpString	
+ilpTime	message.html#ilpTime	IlpValueKind.ilpTime	
+IlpValueKind	message.html#IlpValueKind	message: IlpValueKind	
+IlpValue	message.html#IlpValue	message: IlpValue	
+`$`	message.html#$,IlpValue	message: `$`(v: IlpValue): string	
 IlpMessage	message.html#IlpMessage	message: IlpMessage	
 `$`	message.html#$,IlpMessage	message: `$`(m: IlpMessage): string	
-isValid	message.html#isValid,IlpMessage	message: isValid(m: IlpMessage): bool	
+validate	message.html#validate,IlpMessage	message: validate(m: IlpMessage)	

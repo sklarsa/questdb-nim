@@ -104,12 +104,14 @@ window.addEventListener('DOMContentLoaded', main);
       <li><a class="reference" href="#IlpMessage"
     title="IlpMessage = object
   tableName*: string
-  tagset*: Table[string, string]
-  valueset*: Table[string, float64]
-  timestamp*: IlpTimestamp">IlpMessage</a></li>
-  <li><a class="reference" href="#IlpTimestamp"
-    title="IlpTimestamp = ref object
-  timestamp*: Time">IlpTimestamp</a></li>
+  symbolset*: OrderedTable[string, string]
+  columnset*: OrderedTable[string, IlpValue]
+  timestamp*: Time">IlpMessage</a></li>
+  <li><a class="reference" href="#IlpValue"
+    title="IlpValue = ref IlpValueObj">IlpValue</a></li>
+  <li><a class="reference" href="#IlpValueKind"
+    title="IlpValueKind = enum
+  ilpBool, ilpInt, ilpFloat, ilpString, ilpTime">IlpValueKind</a></li>
 
   </ul>
 </li>
@@ -119,11 +121,13 @@ window.addEventListener('DOMContentLoaded', main);
       <ul class="simple nested-toc-section">$
       <li><a class="reference" href="#%24%2CIlpMessage"
     title="`$`(m: IlpMessage): string">`$`(m: IlpMessage): string</a></li>
+  <li><a class="reference" href="#%24%2CIlpValue"
+    title="`$`(v: IlpValue): string">`$`(v: IlpValue): string</a></li>
 
   </ul>
-  <ul class="simple nested-toc-section">isValid
-      <li><a class="reference" href="#isValid%2CIlpMessage"
-    title="isValid(m: IlpMessage): bool">isValid(m: IlpMessage): bool</a></li>
+  <ul class="simple nested-toc-section">validate
+      <li><a class="reference" href="#validate%2CIlpMessage"
+    title="validate(m: IlpMessage)">validate(m: IlpMessage)</a></li>
 
   </ul>
 
@@ -144,9 +148,9 @@ window.addEventListener('DOMContentLoaded', main);
 <div id="IlpMessage">
 <dt><pre><a href="message.html#IlpMessage"><span class="Identifier">IlpMessage</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">tableName</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>
-  <span class="Identifier">tagset</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Table</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">string</span><span class="Other">]</span>
-  <span class="Identifier">valueset</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Table</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">float64</span><span class="Other">]</span>
-  <span class="Identifier">timestamp</span><span class="Operator">*</span><span class="Other">:</span> <a href="message.html#IlpTimestamp"><span class="Identifier">IlpTimestamp</span></a>
+  <span class="Identifier">symbolset</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">OrderedTable</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">string</span><span class="Other">]</span>
+  <span class="Identifier">columnset</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">OrderedTable</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <a href="message.html#IlpValue"><span class="Identifier">IlpValue</span></a><span class="Other">]</span>
+  <span class="Identifier">timestamp</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Time</span>
 </pre></dt>
 <dd>
 
@@ -154,10 +158,17 @@ window.addEventListener('DOMContentLoaded', main);
 
 </dd>
 </div>
-<div id="IlpTimestamp">
-<dt><pre><a href="message.html#IlpTimestamp"><span class="Identifier">IlpTimestamp</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
-  <span class="Identifier">timestamp</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Time</span>
-</pre></dt>
+<div id="IlpValue">
+<dt><pre><a href="message.html#IlpValue"><span class="Identifier">IlpValue</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Identifier">IlpValueObj</span></pre></dt>
+<dd>
+
+
+
+</dd>
+</div>
+<div id="IlpValueKind">
+<dt><pre><a href="message.html#IlpValueKind"><span class="Identifier">IlpValueKind</span></a> <span class="Other">=</span> <span class="Keyword">enum</span>
+  <span class="Identifier">ilpBool</span><span class="Other">,</span> <span class="Identifier">ilpInt</span><span class="Other">,</span> <span class="Identifier">ilpFloat</span><span class="Other">,</span> <span class="Identifier">ilpString</span><span class="Other">,</span> <span class="Identifier">ilpTime</span></pre></dt>
 <dd>
 
 
@@ -177,8 +188,16 @@ window.addEventListener('DOMContentLoaded', main);
 
 </dd>
 </div>
-<div id="isValid,IlpMessage">
-<dt><pre><span class="Keyword">proc</span> <a href="#isValid%2CIlpMessage"><span class="Identifier">isValid</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="message.html#IlpMessage"><span class="Identifier">IlpMessage</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="$,IlpValue">
+<dt><pre><span class="Keyword">proc</span> <a href="#%24%2CIlpValue"><span class="Identifier">`$`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="message.html#IlpValue"><span class="Identifier">IlpValue</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<dd>
+
+
+
+</dd>
+</div>
+<div id="validate,IlpMessage">
+<dt><pre><span class="Keyword">proc</span> <a href="#validate%2CIlpMessage"><span class="Identifier">validate</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="message.html#IlpMessage"><span class="Identifier">IlpMessage</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
 <dd>
 
 
@@ -195,7 +214,7 @@ window.addEventListener('DOMContentLoaded', main);
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2022-09-29 00:04:12 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2022-09-29 14:32:11 UTC</small>
       </div>
     </div>
   </div>
