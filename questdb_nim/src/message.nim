@@ -47,8 +47,6 @@ type
     timestamp*: Time
 
 proc `$`*(m: IlpMessage): string =
-  # todo: handle escaping
-
   var s = m.tableName
   s.add ","
   for k,v  in m.symbolset.pairs:
@@ -69,33 +67,31 @@ proc `$`*(m: IlpMessage): string =
 const forbiddenTableChars = ['\n','\r','?',',',':','"','\'','\\','/','\0',')','(','+','*','~','%']
 const forbiddenColumnChars = ['\n','\r','?',',',':','"','\'','\\','/','\0',')','(','+','*','~','%','.','-']
 
+proc validateTableOrColumnName(s: string, invalidChars: openArray[char]) =
+  if s == "":
+    raise newException(ValueError, fmt"empty string: '{s}'")
+
+  for i, c in s:
+      if invalidChars.contains(c):
+        if c == '\\' and i < (len(s) - 1) and s[i+1] == ' ':
+          continue
+        raise newException(ValueError, fmt"'{s}' has invalid char: '{c}'")
+
+      if i > 0 and c == ' ' and s[i-1] != '\\':
+        raise newException(ValueError, &"'{s}' has unescaped ' ' at idx {i}")
+
 proc validate*(m: IlpMessage) =
-  # todo: check escaped chars
 
   # Check table
-  if m.tableName == "":
-    raise newException(ValueError, "len of m.tableName is 0")
+  validateTableOrColumnName(m.tableName, forbiddenTableChars)
 
+  # Additionally check to make sure tableName does not start or end with '.'
   if m.tableName[0] == '.' or m.tableName[len(m.tableName) - 1] == '.':
     raise newException(ValueError, "m.tableName cannot begin or end with '.'")
 
-  for c in m.tableName:
-    if forbiddenTableChars.contains(c):
-      raise newException(ValueError, "invalid m.tableName: " & m.tableName)
-
-  # Check columns
+  # Check column names
   for s in m.symbolset.keys:
-    if s == "":
-      raise newException(ValueError, fmt"invalid symbolset key: '{s}'")
-
-    for c in s:
-      if forbiddenColumnChars.contains(c):
-        raise newException(ValueError, fmt"invalid symbolset key: '{c}")
+    validateTableOrColumnName(s, forbiddenColumnChars)
 
   for s in m.columnset.keys:
-    if s == "":
-      raise newException(ValueError, fmt"invalid columnset key: '{s}'")
-
-    for c in s:
-      if forbiddenColumnChars.contains(c):
-        raise newException(ValueError, fmt"invalid columnset key: '{c}")
+    validateTableOrColumnName(s, forbiddenColumnChars)

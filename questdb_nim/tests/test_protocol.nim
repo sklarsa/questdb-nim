@@ -21,7 +21,6 @@ test "protocol":
   }.toOrderedTable()
 
 
-
   # Message with no timestamp
   let m1 = IlpMessage(
       tableName: "hi",
@@ -41,6 +40,12 @@ test "protocol":
   check $m2 == &"hi,t1=tv1,t2=tv2 v1=\"test\" {timeNanoseconds}"
   m2.validate()
 
-  # Edge case
-  ## for future reference... doAssertRaises(ValueError): ...
-  ##
+  # Test unescaped space
+  let unescapedSpaces = @["\\  ", "a ", "a a", "a\\ a a"]
+  for s in unescapedSpaces:
+    var m3 = IlpMessage(
+      tableName: s
+    )
+    doAssertRaises(ValueError, m3.validate())
+
+  # todo: test " " --> should be invalid
