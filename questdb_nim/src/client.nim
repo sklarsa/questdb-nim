@@ -2,7 +2,7 @@ import message
 import std/[net,tables,times]
 
 type
-    IlpClient = ref object
+    IlpClient* = ref object
         address*: string
         port*: Port
         socket: Socket
