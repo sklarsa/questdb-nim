@@ -1,7 +1,5 @@
 import unittest
-import std/strformat
-import std/tables
-import std/times
+import std/[strformat,tables,times]
 
 import message
 

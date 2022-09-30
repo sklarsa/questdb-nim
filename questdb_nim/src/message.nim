@@ -1,8 +1,4 @@
-import std/math
-import std/strformat
-import std/strutils
-import std/tables
-import std/times
+import std/[math,strformat,strutils,tables,times]
 
 
 proc toMicroseconds*(t: Time): int =
@@ -81,8 +77,9 @@ proc validateTableOrColumnName(s: string, invalidChars: openArray[char]) =
         raise newException(ValueError, &"'{s}' has unescaped ' ' at idx {i}")
 
 proc validate*(m: IlpMessage) =
+  ## validates table and column names
 
-  # Check table
+  # Check tableName
   validateTableOrColumnName(m.tableName, forbiddenTableChars)
 
   # Additionally check to make sure tableName does not start or end with '.'

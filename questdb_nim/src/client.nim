@@ -1,7 +1,5 @@
 import message
-import std/net
-import std/tables
-import std/times
+import std/[net,tables,times]
 
 type
     IlpClient = ref object
