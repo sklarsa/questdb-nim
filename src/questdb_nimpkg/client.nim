@@ -1,11 +1,16 @@
 import message
-import std/[net,tables,times]
+import std/[asyncnet, asyncdispatch, net,tables,times]
 
 type
     IlpClient* = ref object
         address*: string
         port*: Port
         socket: Socket
+
+    AsyncIlpClient* = ref object
+        address*: string
+        port*: Port
+        socket: AsyncSocket
 
 proc newIlpClient(address: string, port: Port): IlpClient =
     let sock = newSocket()
@@ -14,6 +19,14 @@ proc newIlpClient(address: string, port: Port): IlpClient =
     # todo: handle authentication here
 
     IlpClient(address: address, port: port, socket: sock)
+
+proc newAsyncIlpClient*(address: string, port: Port): Future[AsyncIlpClient] {.async.} =
+    let sock = newAsyncSocket(AF_INET, SOCK_STREAM, IPPROTO_TCP)
+    await sock.connect(address, port)
+
+    var retFuture = newFuture[AsyncIlpClient]("newAsyncIlpClient")
+    retFuture.complete(AsyncIlpClient(address: address, port: port, socket: sock))
+
 
 proc send*(c: IlpClient, m: string) =
     ## Sends a raw string message to the server.
