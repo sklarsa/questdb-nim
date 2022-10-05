@@ -2,7 +2,7 @@
 
 version       = "0.1.0"
 author        = "Steve Sklar"
-description   = "A new awesome nimble package"
+description   = "An ILP (Influx Line Protocol) client for QuestDB"
 license       = "MIT"
 srcDir        = "src"
 installExt    = @["nim"]
