@@ -1,12 +1,12 @@
 .vscode/
 
-questdb_nim/src/*
-!questdb_nim/src/*.nim
-!questdb_nim/src/*.nims
+src/*
+!src/*.nim
+!src/*.nims
 
 
-questdb_nim/tests/*
-!questdb_nim/tests/*.nim
-!questdb_nim/tests/*.nims
+tests/*
+!tests/*.nim
+!tests/*.nims
 
 profile_results.txt
