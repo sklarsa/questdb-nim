@@ -2,7 +2,8 @@ test:
 	nimble test
 
 docs:
-	nim doc --project --index:on --outdir:htmldocs questdb_nim/src/client.nim
+	rm htmldocs/*.idx || true
+	nim doc --project --index:on --outdir:htmldocs src/questdb_nim.nim
 
 install-githooks:
 	cp .githooks/pre-commit ./.git/hooks/pre-commit

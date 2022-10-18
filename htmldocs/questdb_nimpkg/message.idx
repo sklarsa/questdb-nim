@@ -1,0 +1,13 @@
+toMicroseconds	questdb_nimpkg/message.html#toMicroseconds,Time	message: toMicroseconds(t: Time): int	
+toNanoseconds	questdb_nimpkg/message.html#toNanoseconds,Time	message: toNanoseconds(t: Time): int	
+ilpBool	questdb_nimpkg/message.html#ilpBool	IlpValueKind.ilpBool	
+ilpInt	questdb_nimpkg/message.html#ilpInt	IlpValueKind.ilpInt	
+ilpFloat	questdb_nimpkg/message.html#ilpFloat	IlpValueKind.ilpFloat	
+ilpString	questdb_nimpkg/message.html#ilpString	IlpValueKind.ilpString	
+ilpTime	questdb_nimpkg/message.html#ilpTime	IlpValueKind.ilpTime	
+IlpValueKind	questdb_nimpkg/message.html#IlpValueKind	message: IlpValueKind	
+IlpValue	questdb_nimpkg/message.html#IlpValue	message: IlpValue	
+`$`	questdb_nimpkg/message.html#$,IlpValue	message: `$`(v: IlpValue): string	
+IlpMessage	questdb_nimpkg/message.html#IlpMessage	message: IlpMessage	
+`$`	questdb_nimpkg/message.html#$,IlpMessage	message: `$`(m: IlpMessage): string	
+validate	questdb_nimpkg/message.html#validate,IlpMessage	message: validate(m: IlpMessage)	

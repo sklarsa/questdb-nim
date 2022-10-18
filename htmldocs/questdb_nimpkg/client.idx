@@ -1,0 +1,9 @@
+IlpClient	questdb_nimpkg/client.html#IlpClient	client: IlpClient	
+AsyncIlpClient	questdb_nimpkg/client.html#AsyncIlpClient	client: AsyncIlpClient	
+send	questdb_nimpkg/client.html#send,IlpClient,string	client: send(c: IlpClient; m: string)	
+send	questdb_nimpkg/client.html#send,IlpClient,IlpMessage	client: send(c: IlpClient; m: IlpMessage)	
+send	questdb_nimpkg/client.html#send,IlpClient,openArray[IlpMessage]	client: send(c: IlpClient; m: openArray[IlpMessage])	
+newAsyncIlpClient	questdb_nimpkg/client.html#newAsyncIlpClient,string,Port	client: newAsyncIlpClient(address: string; port: Port): Future[AsyncIlpClient]	
+send	questdb_nimpkg/client.html#send,AsyncIlpClient,string	client: send(c: AsyncIlpClient; m: string): owned(Future[void])	
+send	questdb_nimpkg/client.html#send,AsyncIlpClient,IlpMessage	client: send(c: AsyncIlpClient; m: IlpMessage): owned(Future[void])	
+send	questdb_nimpkg/client.html#send,AsyncIlpClient,openArray[IlpMessage]	client: send(c: AsyncIlpClient; m: openArray[IlpMessage]): owned(Future[void])	
