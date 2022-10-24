@@ -1,8 +1,8 @@
 .vscode/
 
-src/*
-!src/*.nim
-!src/*.nims
+src/questdb_nimpkg/*
+!src/questdb_nimpkg/*.nim
+!src/questdb_nimpkg/*.nims
 
 
 tests/*
