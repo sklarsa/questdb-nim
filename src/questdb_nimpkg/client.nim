@@ -6,19 +6,25 @@ type
         address*: string
         port*: Port
         socket: Socket
+        jwk: Table[string, string]
 
     AsyncIlpClient* = ref object
         address*: string
         port*: Port
         socket: AsyncSocket
 
-proc newIlpClient(address: string, port: Port): IlpClient =
+proc newIlpClient*(address: string, port: Port): IlpClient =
     let sock = newSocket()
     sock.connect(address, port)
 
-    # todo: handle authentication here
-
     IlpClient(address: address, port: port, socket: sock)
+
+proc newIlpClient*(address: string, port: Port, jwk: Table[string, string]): IlpClient =
+    let sock = newSocket()
+    sock.connect(address, port)
+
+    IlpClient(address: address, port: port, socket: sock, jwk: jwk)
+
 
 proc send*(c: IlpClient, m: string) =
     ## Sends a raw string message to the server.

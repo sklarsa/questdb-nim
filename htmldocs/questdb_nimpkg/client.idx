@@ -1,5 +1,7 @@
 IlpClient	questdb_nimpkg/client.html#IlpClient	client: IlpClient	
 AsyncIlpClient	questdb_nimpkg/client.html#AsyncIlpClient	client: AsyncIlpClient	
+newIlpClient	questdb_nimpkg/client.html#newIlpClient,string,Port	client: newIlpClient(address: string; port: Port): IlpClient	
+newIlpClient	questdb_nimpkg/client.html#newIlpClient,string,Port,Table[string,string]	client: newIlpClient(address: string; port: Port; jwk: Table[string, string]): IlpClient	
 send	questdb_nimpkg/client.html#send,IlpClient,string	client: send(c: IlpClient; m: string)	
 send	questdb_nimpkg/client.html#send,IlpClient,IlpMessage	client: send(c: IlpClient; m: IlpMessage)	
 send	questdb_nimpkg/client.html#send,IlpClient,openArray[IlpMessage]	client: send(c: IlpClient; m: openArray[IlpMessage])	

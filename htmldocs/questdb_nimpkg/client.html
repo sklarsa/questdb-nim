@@ -116,7 +116,8 @@ window.addEventListener('DOMContentLoaded', main);
     title="IlpClient = ref object
   address*: string
   port*: Port
-  socket: Socket">IlpClient</a></li>
+  socket: Socket
+  jwk: Table[string, string]">IlpClient</a></li>
 
   </ul>
 </li>
@@ -126,6 +127,13 @@ window.addEventListener('DOMContentLoaded', main);
       <ul class="simple nested-toc-section">newAsyncIlpClient
       <li><a class="reference" href="#newAsyncIlpClient%2Cstring%2CPort"
     title="newAsyncIlpClient(address: string; port: Port): Future[AsyncIlpClient]">newAsyncIlpClient(address: string; port: Port): Future[AsyncIlpClient]</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">newIlpClient
+      <li><a class="reference" href="#newIlpClient%2Cstring%2CPort"
+    title="newIlpClient(address: string; port: Port): IlpClient">newIlpClient(address: string; port: Port): IlpClient</a></li>
+  <li><a class="reference" href="#newIlpClient%2Cstring%2CPort%2CTable%5Bstring%2Cstring%5D"
+    title="newIlpClient(address: string; port: Port; jwk: Table[string, string]): IlpClient">newIlpClient(address: string; port: Port; jwk: Table[string, string]): IlpClient</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">send
@@ -180,6 +188,7 @@ window.addEventListener('DOMContentLoaded', main);
   <span class="Identifier">address</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>
   <span class="Identifier">port</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Port</span>
   <span class="Identifier">socket</span><span class="Other">:</span> <span class="Identifier">Socket</span>
+  <span class="Identifier">jwk</span><span class="Other">:</span> <span class="Identifier">Table</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">string</span><span class="Other">]</span>
 </pre></dt>
 <dd>
 
@@ -195,6 +204,24 @@ window.addEventListener('DOMContentLoaded', main);
 <div id="newAsyncIlpClient,string,Port">
 <dt><pre><span class="Keyword">proc</span> <a href="#newAsyncIlpClient%2Cstring%2CPort"><span class="Identifier">newAsyncIlpClient</span></a><span class="Other">(</span><span class="Identifier">address</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">Port</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Future</span><span class="Other">[</span><a href="client.html#AsyncIlpClient"><span class="Identifier">AsyncIlpClient</span></a><span class="Other">]</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span>.}</pre></dt>
+<dd>
+
+
+
+</dd>
+</div>
+<div id="newIlpClient,string,Port">
+<dt><pre><span class="Keyword">proc</span> <a href="#newIlpClient%2Cstring%2CPort"><span class="Identifier">newIlpClient</span></a><span class="Other">(</span><span class="Identifier">address</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">Port</span><span class="Other">)</span><span class="Other">:</span> <a href="client.html#IlpClient"><span class="Identifier">IlpClient</span></a> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">SslError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadIOEffect</span><span class="Other">]</span></span>.}</pre></dt>
+<dd>
+
+
+
+</dd>
+</div>
+<div id="newIlpClient,string,Port,Table[string,string]">
+<dt><pre><span class="Keyword">proc</span> <a href="#newIlpClient%2Cstring%2CPort%2CTable%5Bstring%2Cstring%5D"><span class="Identifier">newIlpClient</span></a><span class="Other">(</span><span class="Identifier">address</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">Port</span><span class="Other">;</span> <span class="Identifier">jwk</span><span class="Other">:</span> <span class="Identifier">Table</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">string</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="client.html#IlpClient"><span class="Identifier">IlpClient</span></a> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">SslError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadIOEffect</span><span class="Other">]</span></span>.}</pre></dt>
 <dd>
 
 
@@ -265,7 +292,7 @@ Sends a raw string message to the server. WARNING: No validation is performed in
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2022-10-24 15:18:24 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2022-10-24 15:24:37 UTC</small>
       </div>
     </div>
   </div>
